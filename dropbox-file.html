@@ -1,0 +1,30 @@
+<link
+  href="../polymer/polymer.html"
+  rel="import">
+<link
+  href="dropbox.html"
+  rel="import">
+<link
+  href="dropbox-item-behavior.html"
+  rel="import">
+<!--
+An element providing access to Dropbox files.
+
+Example:
+
+    <dropbox-file key="your-app-key" path="myfile.txt">
+      This is your content
+    </dropbox-file>
+
+@group Dropbox Elements
+@element dropbox-file
+@demo demo/index.html
+-->
+<dom-module id="dropbox-file">
+  <template>
+    <!-- Here goes markup -->
+    <content id="content">{{_data}}</content>
+  </template>
+</dom-module>
+<script
+  src="dropbox-file.js"></script>

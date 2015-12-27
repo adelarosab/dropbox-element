@@ -1,0 +1,39 @@
+<link
+  href="../polymer/polymer.html"
+  rel="import">
+<link
+  href="dropbox.html"
+  rel="import">
+<link
+  href="dropbox-item-behavior.html"
+  rel="import">
+<!--
+An element providing access to Dropbox directories.
+
+Example:
+
+    <dropbox-dir key="yourkey" path="mydir">
+      <dropbox-file path="myfile"></dropbox-file>
+      <dropbox-file path="yourfile"></dropbox-file>
+      <dropbox-file path="itsfile"></dropbox-file>
+    </dropbox-dir>
+
+@group Dropbox Elements
+@element dropbox-dir
+@demo demo/index.html
+-->
+<dom-module id="dropbox-dir">
+  <template>
+    <!-- Here goes markup -->
+    <template is="dom-repeat" items="{{files}}">
+      <template is="dom-if" if="{{item.isFile}}">
+        <dropbox-file key="{{key}}" path="{{item.path}}"></dropbox-file>
+      </template>
+      <template is="dom-if" if="{{item.isFolder}}">
+        <dropbox-dir key="{{key}}" path="{{item.path}}"></dropbox-dir>
+      </template>
+    </template>
+  </template>
+</dom-module>
+<script
+  src="dropbox-dir.js"></script>

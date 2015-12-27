@@ -1,0 +1,26 @@
+{
+  "name": "dropbox-element",
+  "version": "0.1.0",
+  "authors": [
+    "Adrian de la Rosa <adrian@delarosab.me>"
+  ],
+  "description": "Two elements which provide access to dropbox files and directories.",
+  "keywords": [
+    "web-component",
+    "web-components",
+    "polymer",
+    "dropbox",
+    "file",
+    "directory"
+  ],
+  "main": "dropbox-file.html",
+  "license": "http://polymer.github.io/LICENSE.txt",
+  "ignore": [],
+  "dependencies": {
+    "polymer": "Polymer/polymer#^1.1.0",
+    "dropbox": "dropbox-build#*"
+  },
+  "devDependencies": {
+    "iron-component-page": "PolymerElements/iron-component-page#^1.0.0"
+  }
+}

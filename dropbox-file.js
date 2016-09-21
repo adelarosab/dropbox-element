@@ -3,9 +3,6 @@
   Polymer({
     is: "dropbox-file",
     behaviors: [window.DropboxItemBehavior],
-    hostAttributes: {
-      contenteditable: true
-    },
     properties: {
       _data: {
         notify: true,
@@ -27,11 +24,24 @@
       }
     },
     _observeAuto: function(auto) {
-      if (auto) {
-        return this.$.content.addEventListener("input", this.save);
-      } else {
-        return this.$.content.removeEventListener("input", this.save);
+      var nodes;
+      if (this.obs == null) {
+        this.obs = new MutationObserver(this.save.bind(this));
       }
+      nodes = (Polymer.dom(this.$$("content"))).getDistributedNodes();
+      if (auto && this.hasContent && (nodes != null)) {
+        return this.obs.observe(nodes[0], {
+          attributes: true,
+          childList: true,
+          characterData: true
+        });
+      } else {
+        return this.obs.disconnect();
+      }
+    },
+    attached: function() {
+      this.hasContent = true;
+      return this._observeAuto(true);
     },
 
     /* Read data from Dropbox File */
@@ -56,7 +66,7 @@
     /* Synchronize Dropbox File */
     save: function() {
       return this.execute(function() {
-        return this.instance.writeFile(this.path, this.$.content.textContent, (function(_this) {
+        return this.instance.writeFile(this.path, this.textContent, (function(_this) {
           return function(error) {
             if (error != null) {
               return _this.fire("error", error);

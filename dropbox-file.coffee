@@ -3,9 +3,6 @@ Polymer
 
   behaviors: [window.DropboxItemBehavior]
 
-  hostAttributes:
-    contenteditable: true
-
   properties:
     _data:
       notify: yes
@@ -23,10 +20,17 @@ Polymer
       type: Boolean
 
   _observeAuto: (auto) ->
-    if auto
-      @$.content.addEventListener "input", @save
+    @obs ?= new MutationObserver @save.bind this
+    nodes = (Polymer.dom (this.$$ "content")).getDistributedNodes()
+
+    if auto and @hasContent and nodes?
+      @obs.observe nodes[0], { attributes: true, childList: true, characterData: true }
     else
-      @$.content.removeEventListener "input", @save
+      @obs.disconnect()
+
+  attached: ->
+    @hasContent = yes
+    @_observeAuto yes
 
   ### Read data from Dropbox File ###
   fetch: ->
@@ -38,5 +42,5 @@ Polymer
 
   ### Synchronize Dropbox File ###
   save: ->
-    @execute -> @instance.writeFile @path, @$.content.textContent, (error) =>
+    @execute -> @instance.writeFile @path, @textContent, (error) =>
       @fire "error", error if error?

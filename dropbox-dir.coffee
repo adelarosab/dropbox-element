@@ -4,6 +4,7 @@ Polymer
   behaviors: [window.DropboxItemBehavior]
 
   properties:
+    ### Array of elements which compose the directory inside our Dropbox Account ###
     files:
       notify: yes
       type: Array
